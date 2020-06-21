@@ -28,7 +28,28 @@ public class Drones {
             int checkY = targetY + offsetY;
 
             if (checkX < 0 || checkX >= regionWidth || checkY < 0 || checkY >= regionHeight) {
-                nextSquare = "barrier";
+                if (checkX < 0){
+                    checkX = regionWidth;
+                } else if (checkX >= regionWidth){
+                    checkX = 0;
+                } else if (checkY < 0){
+                    checkY = regionHeight;
+                } else if (checkY >= regionHeight){
+                    checkY = 0;
+                } switch (regionInfo[checkX][checkY]) {
+                    case ScenarioFile.EMPTY_CODE:
+                        nextSquare = "empty";
+                        break;
+                    case ScenarioFile.STARS_CODE:
+                        nextSquare = "stars";
+                        break;
+                    case ScenarioFile.SUN_CODE:
+                        nextSquare = "sun";
+                        break;
+                    default:
+                        nextSquare = "unknown";
+                        break;
+                }
             } else if (droneStatus[0] == OK_CODE && checkX == droneX[0] && checkY == droneY[0]) {
                 nextSquare = "drone";
             } else if (droneStatus[1] == OK_CODE && checkX == droneX[1] && checkY == droneY[1]) {
